@@ -48,7 +48,7 @@ function moveBall(ball) {
   if(diff < 100){
     addScore = false;
   }
-  if(diff < 70){
+  if(diff < 40){
     var win = document.getElementById('audio');
     var fail = document.getElementById('audio2');
     var id = ball.getAttribute('id');
