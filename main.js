@@ -9,6 +9,7 @@ var fails = 0;
 var lives = 3;
 var show_high_score = true;
 var allowed = true;
+var dropspeed = 0.3;
 
 function rotate(deg, event){
   if(indices == 0){
@@ -29,14 +30,22 @@ window.ondblclick = (event) => {
   event.preventDefault();
 }
 
+function variableDroppageArchitecture(){
+    var speeds = [2.5,2.6,2.65,2.75];
+    dropspeed = speeds[Math.floor(Math.random()*speeds.length)];
+    return dropspeed;
+}
+
 function createFallingBalls(){
   if(allowed == true){
   falling_ball = document.createElement('div', 'div');
   falling_ball.setAttribute('id', 'falling_ball');
-  var bg_colour = colour[Math.floor(Math.random()*colour.length)]
+  var bg_colour = colour[Math.floor(Math.random()*colour.length)];
   falling_ball.setAttribute('data', bg_colour);
   //console.log(bg_colour);
   falling_ball.style.backgroundColor = bg_colour;
+  console.log(variableDroppageArchitecture());
+  falling_ball.style.transition = 0.43/variableDroppageArchitecture()+'s';
   document.body.appendChild(falling_ball);
   setInterval(()=>{moveBall(falling_ball)}, 50);
   }
