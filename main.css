@@ -37,9 +37,37 @@ body{
 #icon{
   position: fixed;
   left: 20;
-  top: 15px;
+  top: 14px;
 }
 h3{
   padding: 0px;
   margin: 0px;
+}
+.hidden, .hidden2{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: -100%;
+  transition: .4s;
+  left: 0;
+  background-color: rgba(255, 255, 255, .9);
+}
+.score-panel{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  transition: .4s;
+  left: 0;
+  background-color: rgba(255, 255, 255, .9);
+}
+#inner{
+  margin-top: 120px;
+  border: 0px;
+}
+#resume{
+  width: 50%;
+  height: 45px;
+  border: 0px;
+  background-color: red;
 }
