@@ -1,6 +1,6 @@
 var rotate_init = 45;
 var current_colour = 'green';
-var colour = ['green', 'blue', 'red', 'yellow'];
+var colour = ['#00ff00', 'blue', 'red', 'yellow'];
 var index = 1;
 var falling_ball = '';
 var score = 0;
