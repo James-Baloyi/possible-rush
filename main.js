@@ -62,6 +62,8 @@ function moveBall(ball) {
     }else{
       //console.log(score);
       if(score > 100){
+      lives = lives - 1;
+      document.getElementById('lifeBox').innerText = lives;
       updateScore(-20);
       }else{
       updateScore(0);
