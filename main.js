@@ -5,6 +5,10 @@ var index = 1;
 var falling_ball = '';
 var score = 0;
 var indices = 0;
+var fails = 0;
+var lives = 3;
+var show_high_score = true;
+var allowed = true;
 
 function rotate(deg, event){
   if(indices == 0){
@@ -16,7 +20,7 @@ function rotate(deg, event){
     index = 0;
   }
   rotate_init = rotate_init + deg;
-  console.log(rotate_init, current_colour, index);
+  //console.log(rotate_init, current_colour, index);
   var block = event.target;
   block.style.transform = 'rotateZ('+rotate_init+'deg)';
 }
@@ -26,14 +30,16 @@ window.ondblclick = (event) => {
 }
 
 function createFallingBalls(){
+  if(allowed == true){
   falling_ball = document.createElement('div', 'div');
   falling_ball.setAttribute('id', 'falling_ball');
   var bg_colour = colour[Math.floor(Math.random()*colour.length)]
   falling_ball.setAttribute('data', bg_colour);
-  console.log(bg_colour);
+  //console.log(bg_colour);
   falling_ball.style.backgroundColor = bg_colour;
   document.body.appendChild(falling_ball);
   setInterval(()=>{moveBall(falling_ball)}, 50);
+  }
 }
 
 function moveBall(ball) {
@@ -45,10 +51,7 @@ function moveBall(ball) {
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
   var ballBottom = parseInt(ballStyle.bottom.replace('px', ''));
   var diff = ballBottom - boxBottom;
-  if(diff < 100){
-    addScore = false;
-  }
-  if(diff < 40){
+  if(diff < 70){
     var win = document.getElementById('audio');
     var fail = document.getElementById('audio2');
     var id = ball.getAttribute('id');
@@ -57,16 +60,53 @@ function moveBall(ball) {
       updateScore(20);
       win.play();
     }else{
-      console.log(score);
+      //console.log(score);
       if(score > 100){
       updateScore(-20);
       }else{
       updateScore(0);
-      fail.play();
+      lives = lives - 1;
+      document.getElementById('lifeBox').innerText = lives;
     }
+
+    fails = fails + 1;
+
+    console.log(fails);
+    if(fails > 2){
+      allowed = false;
+      restartGame();
+    }
+    fail.play();
+
     }
     removeElement(id);
   }
+}
+
+function restartGame(){
+var previousScore = localStorage.getItem('currentScore');
+if(previousScore == null){
+  previousScore = 0;
+}
+console.log(previousScore);
+
+if(score > previousScore){
+  localStorage.setItem('currentScore', score);
+}
+showRestartModal(previousScore);
+}
+
+function showRestartModal(previousScore){
+    if(score > previousScore){
+      document.getElementsByClassName('hidden')[0].classList.toggle('score-panel');
+      document.getElementById('old-score').innerText = previousScore;
+      document.getElementById('new-score').innerText = score;
+    }else{
+      document.getElementsByClassName('hidden2')[0].classList.toggle('score-panel');
+      document.getElementById('old-score_one').innerText = previousScore;
+      document.getElementById('new-score_one').innerText = score;
+    }
+    console.log(score, previousScore)
 }
 
 function updateScore(add){
@@ -78,4 +118,26 @@ function removeElement(elementId) {
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
     createFallingBalls();
+}
+
+function resumeGame(){
+  allowed = true;
+  score = 0;
+  fails = 0;
+  lives = 3;
+  document.getElementById('lifeBox').innerText = 3;
+  document.getElementById('scoreBox').innerText = 0;
+  document.getElementsByClassName('hidden')[0].classList.toggle('score-panel');
+  createFallingBalls();
+}
+
+function resumeGameFromDeath(){
+  allowed = true;
+  score = 0;
+  fails = 0;
+  lives = 3;
+  document.getElementById('scoreBox').innerText = 0;
+  document.getElementById('lifeBox').innerText = 3;
+  document.getElementsByClassName('hidden2')[0].classList.toggle('score-panel');
+  createFallingBalls();
 }
