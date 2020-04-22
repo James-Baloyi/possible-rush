@@ -13,13 +13,13 @@ self.addEventListener('fetch', event => {
 if(!navigator.onLine && caches.match(event.request)){
   event.respondWith(caches.match(event.request));
   }
-  if(navigator.connection.downLink > 0.005){
-    var cached = caches.match(event.request);
-    event.respondWith(cached);
+  if(navigator.connection.downLink > 0.05){
+    var webResp = fetch(event.request.url);
+    event.respondWith(webResp);
 }
 else
 {
-    var webResp = fetch(event.request.url);
-    event.respondWith(webResp);
+    var cached = caches.match(event.request);
+    event.respondWith(cached);
   }
 });
