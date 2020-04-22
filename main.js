@@ -11,7 +11,14 @@ var show_high_score = true;
 var allowed = true;
 var dropspeed = 0.3;
 
-function rotate(deg, event){
+//Desktop Support since the UI allows
+window.onkeydown = (event){
+  if(event.keyCode == '49' || event.keyCode == 49){
+  rotate(90);
+  }
+}
+
+function rotate(deg){
   if(indices == 0){
     createFallingBalls();
     indices = 1;
@@ -22,7 +29,7 @@ function rotate(deg, event){
   }
   rotate_init = rotate_init + deg;
   //console.log(rotate_init, current_colour, index);
-  var block = event.target;
+  var block = document.getElementsByClassName('block')[0];
   block.style.transform = 'rotateZ('+rotate_init+'deg)';
 }
 
