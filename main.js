@@ -13,7 +13,7 @@ var dropspeed = 0.3;
 
 //Desktop Support since the UI allows
 window.onkeydown = (event) => {
-  if(event.keyCode == '49' || event.keyCode == 49){
+  if(event.keyCode == '32' || event.keyCode == 32){
   rotate(90);
   }
 }
