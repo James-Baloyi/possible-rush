@@ -1,4 +1,5 @@
 var toCache = ['cube.png', 'index.html', 'main.js', 'main.css', 'droplet2.mp3', 'hammer3.mp3'];
+
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
@@ -13,13 +14,13 @@ self.addEventListener('fetch', event => {
 if(!navigator.onLine && caches.match(event.request)){
   event.respondWith(caches.match(event.request));
   }
-  if(navigator.connection.downLink > 0.05){
-    var webResp = fetch(event.request.url);
-    event.respondWith(webResp);
+  if(navigator.connection.downLink < 0.5){
+    var cached = caches.match(event.request);
+    event.respondWith(cached);
 }
 else
 {
-    var cached = caches.match(event.request);
-    event.respondWith(cached);
+    var webResp = fetch(event.request.url);
+    event.respondWith(webResp);
   }
 });
