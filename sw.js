@@ -1,4 +1,4 @@
-var toCache = ['cube.png', 'index.html', 'main.js', 'main.css'];
+var toCache = ['cube.png', 'index.html', 'main.js', 'main.css', 'droplet2.mp3', 'hammer3.mp3'];
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
