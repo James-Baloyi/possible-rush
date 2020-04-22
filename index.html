@@ -5,8 +5,15 @@
 <title>Possible Rush</title>
 <link rel='stylesheet' href='main.css'>
 </head>
-
-<body onclick=''>
+<script>
+ if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js');
+    console.log('[Service Worker] SW installed');
+}else{
+    console.warn('[Service Worker] SW not supported');
+}
+</script>
+<body>
 <center>
 <div id='icon'>
 <img src='icon.png' width='100px'>
