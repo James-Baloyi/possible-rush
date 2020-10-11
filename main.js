@@ -40,7 +40,7 @@ window.ondblclick = (event) => {
 
 function variableDroppageArchitecture(){
     var speeds = [2.5,2.6,2.65,2.75];
-    dropspeed = speeds[Math.floor(Math.random()*speeds.length)];
+    dropspeed = speeds[Math.floor(Math.random()*speeds.length) - 1];
     return dropspeed;
 }
 
