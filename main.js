@@ -1,6 +1,6 @@
 var rotate_init = 45;
-var current_colour = 'green';
-var colour = ['green', 'blue', 'red', 'yellow'];
+var current_colour = 'lime';
+var colour = ['lime', 'blue', 'red', 'yellow'];
 var index = 1;
 var falling_ball = '';
 var score = 0;
@@ -29,6 +29,10 @@ window.ondblclick = (event) => {
   event.preventDefault();
 }
 
+window.onselect = (event) => {
+  event.preventDefault();
+}
+
 function createFallingBalls(){
   if(allowed == true){
   falling_ball = document.createElement('div', 'div');
@@ -38,20 +42,20 @@ function createFallingBalls(){
   //console.log(bg_colour);
   falling_ball.style.backgroundColor = bg_colour;
   document.body.appendChild(falling_ball);
-  setInterval(()=>{moveBall(falling_ball)}, 50);
+  setInterval(()=>{moveBall(falling_ball)}, 10);
   }
 }
 
 function moveBall(ball) {
   var ballStyle = window.getComputedStyle(ball);
   var topValue = ballStyle.getPropertyValue("top").replace("px", "");
-  ball.style.top = (Number(topValue) + 70) + "px";
+  ball.style.top = (Number(topValue) + 110) + "px";
   var box = document.getElementsByClassName('block')[0];
   var boxStyle = window.getComputedStyle(box);
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
   var ballBottom = parseInt(ballStyle.bottom.replace('px', ''));
   var diff = ballBottom - boxBottom;
-  if(diff < 70){
+  if(diff < 90){
     var win = document.getElementById('audio');
     var fail = document.getElementById('audio2');
     var id = ball.getAttribute('id');
@@ -72,7 +76,6 @@ function moveBall(ball) {
     }
 
     fails = fails + 1;
-
     console.log(fails);
     if(fails > 2){
       allowed = false;
