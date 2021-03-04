@@ -1,6 +1,6 @@
 var rotate_init = 45;
 var current_colour = 'green';
-var colour = ['#00ff00', 'blue', 'red', 'yellow'];
+var colour = ['green', 'blue', 'red', 'yellow'];
 var index = 1;
 var falling_ball = '';
 var score = 0;
@@ -9,17 +9,8 @@ var fails = 0;
 var lives = 3;
 var show_high_score = true;
 var allowed = true;
-var dropspeed = 0.3;
 
-//Desktop Support since the UI allows
-window.onkeydown = (event) => {
-  event.preventDefault();
-  if(event.keyCode == '32' || event.keyCode == 32){
-  rotate(90);
-  }
-}
-
-function rotate(deg){
+function rotate(deg, event){
   if(indices == 0){
     createFallingBalls();
     indices = 1;
@@ -30,7 +21,7 @@ function rotate(deg){
   }
   rotate_init = rotate_init + deg;
   //console.log(rotate_init, current_colour, index);
-  var block = document.getElementsByClassName('block')[0];
+  var block = event.target;
   block.style.transform = 'rotateZ('+rotate_init+'deg)';
 }
 
@@ -38,22 +29,14 @@ window.ondblclick = (event) => {
   event.preventDefault();
 }
 
-function variableDroppageArchitecture(){
-    var speeds = [2.5,2.6,2.65,2.75];
-    dropspeed = speeds[Math.floor(Math.random()*speeds.length) - 1];
-    return dropspeed;
-}
-
 function createFallingBalls(){
   if(allowed == true){
   falling_ball = document.createElement('div', 'div');
   falling_ball.setAttribute('id', 'falling_ball');
-  var bg_colour = colour[Math.floor(Math.random()*colour.length)];
+  var bg_colour = colour[Math.floor(Math.random()*colour.length)]
   falling_ball.setAttribute('data', bg_colour);
   //console.log(bg_colour);
   falling_ball.style.backgroundColor = bg_colour;
-  console.log(variableDroppageArchitecture());
-  falling_ball.style.transition = 0.43/variableDroppageArchitecture()+'s';
   document.body.appendChild(falling_ball);
   setInterval(()=>{moveBall(falling_ball)}, 50);
   }
