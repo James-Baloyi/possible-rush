@@ -1325,10 +1325,10 @@ var animals = [
     "Zebra"
 ];
 
-var adjective = adj[Math.random(adj.length - 1)];
+var adjective = adj[Math.floor(Math.random() * adj.length)];
 console.log(adjective)
 
-var animal = animals[Math.random(animals.length - 1)];
+var animal = animals[Math.floor(Math.random() * animals.length)];
 console.log(animal);
 
 var username = `${adjective}-${animal}`;
