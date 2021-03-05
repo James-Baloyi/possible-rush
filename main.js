@@ -10,6 +10,8 @@ var lives = 3;
 var show_high_score = true;
 var allowed = true;
 
+var darkmode = false;
+
 function rotate(deg, event){
   if(indices == 0){
     createFallingBalls();
@@ -145,4 +147,36 @@ function resumeGameFromDeath(){
   document.getElementById('lifeBox').innerText = 3;
   document.getElementsByClassName('hidden2')[0].classList.toggle('score-panel');
   createFallingBalls();
+}
+
+function toggleDarkMode(){
+  if(!darkmode){
+    var toggleBall = document.getElementsByClassName('toggle-ball')[0];
+    toggleBall.classList.remove("darkmode-off");
+    toggleBall.classList.add("darkmode-on");
+    darkenElements();
+    darkmode = true;
+  }else{
+    var toggleBall = document.getElementsByClassName('toggle-ball')[0];
+    toggleBall.classList.remove("darkmode-on");
+    toggleBall.classList.add("darkmode-off");
+    lightenElements();
+    darkmode = false;
+  }
+}
+
+function darkenElements(){
+  var lightElements = document.getElementsByClassName("light");
+
+  for(var i = 0; i < lightElements.length; i++){
+    lightElements[i].classList.toggle("dark")
+  }
+}
+
+function lightenElements(){
+  var lightElements = document.getElementsByClassName("light");
+
+  for(var i = 0; i < lightElements.length; i++){
+    lightElements[i].classList.toggle("dark")
+  }
 }

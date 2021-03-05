@@ -14,19 +14,19 @@
     console.warn('[Service Worker] SW not supported');
 }
 </script>
-<body>
+<body class="body light">
 <center>
 <div id='icon'>
 <img src='icon.png' width='100px'>
 </div>
-<div id='scoreboard'>
+<div id='scoreboard' class='scoreboard light'>
 <small>Score</small>
 <h3>
 <span id='scoreBox'>0</span>
 </h3>
 </div>
 
-<div id='lifeboard'>
+<div id='lifeboard' class='lifeboard light'>
 <small>Lives</small>
 <h3>
 <span id='lifeBox'>3</span>
@@ -35,7 +35,7 @@
 
 <div class='block' onclick='rotate(90, event)'></div>
 
-<div class='hidden'>
+<div class='hidden light'>
 <fieldset id='inner'>
 
 <h4>HIGH SCORE</h4>
@@ -62,9 +62,14 @@
 <button id='resume' onclick='resumeGameFromDeath()'>PLAY AGAIN</button>
 </fieldset>
 </div>
-
-
 </center>
+
+<div class='darkmode-toggle' onclick="toggleDarkMode()">
+  <div class='backdrop'>
+    <div class='toggle-ball darkmode-off'></div>
+  </div>
+</div>
+
 </body>
 
 <audio id='audio'>
