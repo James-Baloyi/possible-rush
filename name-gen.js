@@ -1325,10 +1325,10 @@ var animals = [
     "Zebra"
 ];
 
+if(!localStorage.getItem("username")){
 var adjective = adj[Math.floor(Math.random() * adj.length)];
-console.log(adjective)
-
 var animal = animals[Math.floor(Math.random() * animals.length)];
-console.log(animal);
 
-var username = `${adjective}-${animal}`;
+var username = `${adjective} ${animal}`;
+localStorage.setItem("username", username);
+}
