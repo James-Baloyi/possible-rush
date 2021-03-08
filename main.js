@@ -84,8 +84,8 @@ function moveBall(ball) {
       allowed = false;
       restartGame();
     }
-    if(navigator.vibrate){
-      navigator.vibrate([200]);
+    if(window.screen.width < 720){
+      window.navigator.vibrate([200,10]);
     }else{
       fail.play();
     }
