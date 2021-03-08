@@ -1326,9 +1326,13 @@ var animals = [
 ];
 
 if(!localStorage.getItem("username")){
-var adjective = adj[Math.floor(Math.random() * adj.length)];
-var animal = animals[Math.floor(Math.random() * animals.length)];
+  var adjective = adj[Math.floor(Math.random() * adj.length)];
+  var animal = animals[Math.floor(Math.random() * animals.length)];
 
-var username = `${adjective} ${animal}`;
-localStorage.setItem("username", username);
+  var username = `${adjective} ${animal}`;
+  localStorage.setItem("username", username);
+  document.getElementById("username").innerText = username;
+}else{
+  var username = localStorage.getItem("username");
+  document.getElementById("username").innerText = username;
 }

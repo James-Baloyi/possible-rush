@@ -9,6 +9,7 @@ var fails = 0;
 var lives = 3;
 var show_high_score = true;
 var allowed = true;
+var username;
 
 var darkmode = false;
 
