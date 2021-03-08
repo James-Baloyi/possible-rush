@@ -84,8 +84,12 @@ function moveBall(ball) {
       allowed = false;
       restartGame();
     }
-    fail.play();
-
+    if(navigator.vibrate){
+      navigator.vibrate([200]);
+    }else{
+      fail.play();
+    }
+    
     }
     removeElement(id);
   }
