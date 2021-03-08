@@ -85,11 +85,10 @@ function moveBall(ball) {
       restartGame();
     }
     if(window.screen.width < 720){
-      window.navigator.vibrate([200,10]);
+      window.navigator.vibrate([200]);
     }else{
       fail.play();
     }
-    
     }
     removeElement(id);
   }
@@ -113,10 +112,13 @@ function showRestartModal(previousScore){
       document.getElementsByClassName('hidden')[0].classList.toggle('score-panel');
       document.getElementById('old-score').innerText = previousScore;
       document.getElementById('new-score').innerText = score;
+      window.navigator.vibrate([400,110,300]);
+
     }else{
       document.getElementsByClassName('hidden2')[0].classList.toggle('score-panel');
       document.getElementById('old-score_one').innerText = previousScore;
       document.getElementById('new-score_one').innerText = score;
+      window.navigator.vibrate([600]);
     }
     console.log(score, previousScore)
 }
