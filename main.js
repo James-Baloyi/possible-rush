@@ -14,6 +14,7 @@ var replay_array = [];
 var capture_event;
 var darkmode = false;
 var set_ball_colour;
+var pauseClicked = false;
 
 function rotate(deg, event){
 
@@ -54,15 +55,17 @@ window.onselect = (event) => {
 
 function createFallingBalls(){
   if(allowed == true){
-  falling_ball = document.createElement('div', 'div');
-  falling_ball.setAttribute('id', 'falling_ball');
-  var bg_colour = colour[Math.floor(Math.random()*colour.length)]
-  set_ball_colour = bg_colour;
-  falling_ball.setAttribute('data', bg_colour);
-  //console.log(bg_colour);
-  falling_ball.style.backgroundColor = bg_colour;
-  document.body.appendChild(falling_ball);
-  setInterval(()=>{moveBall(falling_ball)}, 10);
+    falling_ball = document.createElement('div', 'div');
+    falling_ball.setAttribute('id', 'falling_ball');
+    var bg_colour = colour[Math.floor(Math.random()*colour.length)]
+    set_ball_colour = bg_colour;
+    falling_ball.setAttribute('data', bg_colour);
+    //console.log(bg_colour);
+    falling_ball.style.backgroundColor = bg_colour;
+    document.body.appendChild(falling_ball);
+    setInterval(()=>{moveBall(falling_ball)}, 10);
+  }else{
+    console.log("not allowed")
   }
 }
 
@@ -76,7 +79,7 @@ function moveBall(ball){
 
   var ballStyle = window.getComputedStyle(ball);
   var topValue = ballStyle.getPropertyValue("top").replace("px", "");
-  ball.style.top = (Number(topValue) + 115) + "px";
+  ball.style.top = (Number(topValue) + 95) + "px";
   var box = document.getElementsByClassName('block')[0];
   var boxStyle = window.getComputedStyle(box);
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
@@ -126,6 +129,20 @@ function moveBall(ball){
     }
     }
     removeElement(id);
+  }
+}
+
+function handlePause(event){
+  if(pauseClicked == false){
+    pauseClicked = true;
+    allowed = false;
+    event.target.innerText = "Resume";
+  }else{
+    console.log("hello");
+    pauseClicked = false;
+    allowed = true;
+    createFallingBalls();
+    event.target.innerText = "Pause";
   }
 }
 
