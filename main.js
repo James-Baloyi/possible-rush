@@ -10,10 +10,24 @@ var lives = 3;
 var show_high_score = true;
 var allowed = true;
 var username;
-
+var replay_array = [];
+var capture_event;
 var darkmode = false;
+var set_ball_colour;
 
 function rotate(deg, event){
+
+  //console.log(deg, event);
+
+  capture_event = event;
+  
+  var this_play = {
+    event: event,
+    deg: deg
+  }
+
+  replay_array.push(this_play);
+
   if(indices == 0){
     createFallingBalls();
     indices = 1;
@@ -26,6 +40,8 @@ function rotate(deg, event){
   //console.log(rotate_init, current_colour, index);
   var block = event.target;
   block.style.transform = 'rotateZ('+rotate_init+'deg)';
+
+  document.getElementsByClassName("echo")[0].style.transform = "rotateZ("+rotate_init+"deg)";
 }
 
 window.ondblclick = (event) => {
@@ -41,6 +57,7 @@ function createFallingBalls(){
   falling_ball = document.createElement('div', 'div');
   falling_ball.setAttribute('id', 'falling_ball');
   var bg_colour = colour[Math.floor(Math.random()*colour.length)]
+  set_ball_colour = bg_colour;
   falling_ball.setAttribute('data', bg_colour);
   //console.log(bg_colour);
   falling_ball.style.backgroundColor = bg_colour;
@@ -49,16 +66,28 @@ function createFallingBalls(){
   }
 }
 
-function moveBall(ball) {
+function moveBall(ball){
+  var this_play = {
+    event: null,
+    deg: null
+  }
+
+  replay_array.push(this_play);
+
   var ballStyle = window.getComputedStyle(ball);
   var topValue = ballStyle.getPropertyValue("top").replace("px", "");
-  ball.style.top = (Number(topValue) + 110) + "px";
+  ball.style.top = (Number(topValue) + 115) + "px";
   var box = document.getElementsByClassName('block')[0];
   var boxStyle = window.getComputedStyle(box);
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
   var ballBottom = parseInt(ballStyle.bottom.replace('px', ''));
   var diff = ballBottom - boxBottom;
   if(diff < 90){
+
+    console.log(set_ball_colour);
+    document.getElementsByClassName("echo")[0].classList.add("echo-active");
+    setTimeout(()=>{removeCurrentEcho()}, 430);
+
     var win = document.getElementById('audio');
     var fail = document.getElementById('audio2');
     var id = ball.getAttribute('id');
@@ -66,11 +95,13 @@ function moveBall(ball) {
     if(current_colour == ball_colour){
       updateScore(20);
       win.play();
+      document.getElementsByClassName("echo")[0].style.backgroundColor = set_ball_colour;
     }else{
       //console.log(score);
       if(score > 100){
       lives = lives - 1;
       document.getElementById('lifeBox').innerText = lives;
+      document.getElementsByClassName("echo")[0].style.backgroundColor = "black";
       updateScore(-20);
       }else{
       updateScore(0);
@@ -85,13 +116,31 @@ function moveBall(ball) {
       restartGame();
     }
     if(window.screen.width < 720){
-      window.navigator.vibrate([200]);
+      try{
+        window.navigator.vibrate([200]);
+      }catch(e){
+        console.log(e);
+      }
     }else{
       fail.play();
     }
     }
     removeElement(id);
   }
+}
+
+function removeCurrentEcho(){
+  var echo = document.getElementsByClassName("echo")[0];
+  
+  tokenDiv.removeChild(echo);
+  createNewEcho();
+}
+
+function createNewEcho(){
+  var newEcho = document.createElement("div","div");
+  newEcho.className = "echo";
+  var tokenDiv = document.getElementById("tokenDiv");
+  tokenDiv.appendChild(newEcho);
 }
 
 function restartGame(){
@@ -174,7 +223,6 @@ function toggleDarkMode(){
 
 function darkenElements(){
   var lightElements = document.getElementsByClassName("light");
-
   for(var i = 0; i < lightElements.length; i++){
     lightElements[i].classList.toggle("dark")
   }
@@ -182,8 +230,23 @@ function darkenElements(){
 
 function lightenElements(){
   var lightElements = document.getElementsByClassName("light");
-
   for(var i = 0; i < lightElements.length; i++){
     lightElements[i].classList.toggle("dark")
   }
+}
+
+var i = 0;
+function replay(){
+  var play = replay_array[i++];
+  if(play.event !== null & play.deg !== null){
+    rotate(play.deg, play.event);
+  }
+}
+
+function doReplay(){
+  lives = 10;
+  allowed = true;
+  fails = -6;
+  createFallingBalls();
+  setInterval(()=>{replay()}, 50);
 }
