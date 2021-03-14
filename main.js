@@ -15,11 +15,9 @@ var capture_event;
 var darkmode = false;
 var set_ball_colour;
 var pauseClicked = false;
+var ball_speed_increase = 0;
 
 function rotate(deg, event){
-
-  //console.log(deg, event);
-
   capture_event = event;
   
   var this_play = {
@@ -55,6 +53,12 @@ window.onselect = (event) => {
 
 function createFallingBalls(){
   if(allowed == true){
+    if(ball_speed_increase > 47){
+      ball_speed_increase = ball_speed_increase - 3;
+    }else if(ball_speed_increase < 48){
+      ball_speed_increase = ball_speed_increase + 3;
+    }
+    console.log(ball_speed_increase);
     falling_ball = document.createElement('div', 'div');
     falling_ball.setAttribute('id', 'falling_ball');
     var bg_colour = colour[Math.floor(Math.random()*colour.length)]
@@ -79,7 +83,8 @@ function moveBall(ball){
 
   var ballStyle = window.getComputedStyle(ball);
   var topValue = ballStyle.getPropertyValue("top").replace("px", "");
-  ball.style.top = (Number(topValue) + 95) + "px";
+  ball.style.top = (Number(topValue) + (95 + ball_speed_increase)) + "px";
+  console.log(ball_speed_increase);
   var box = document.getElementsByClassName('block')[0];
   var boxStyle = window.getComputedStyle(box);
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
@@ -138,7 +143,6 @@ function handlePause(event){
     allowed = false;
     event.target.innerText = "Resume";
   }else{
-    console.log("hello");
     pauseClicked = false;
     allowed = true;
     createFallingBalls();
@@ -148,7 +152,6 @@ function handlePause(event){
 
 function removeCurrentEcho(){
   var echo = document.getElementsByClassName("echo")[0];
-  
   tokenDiv.removeChild(echo);
   createNewEcho();
 }
