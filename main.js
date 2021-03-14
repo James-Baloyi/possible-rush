@@ -36,7 +36,6 @@ function rotate(deg, event){
     index = 0;
   }
   rotate_init = rotate_init + deg;
-  //console.log(rotate_init, current_colour, index);
   var block = event.target;
   block.style.transform = 'rotateZ('+rotate_init+'deg)';
 
@@ -58,18 +57,16 @@ function createFallingBalls(){
     }else if(ball_speed_increase < 48){
       ball_speed_increase = ball_speed_increase + 0.75;
     }
-    console.log(ball_speed_increase);
     falling_ball = document.createElement('div', 'div');
     falling_ball.setAttribute('id', 'falling_ball');
     var bg_colour = colour[Math.floor(Math.random()*colour.length)]
     set_ball_colour = bg_colour;
     falling_ball.setAttribute('data', bg_colour);
-    //console.log(bg_colour);
     falling_ball.style.backgroundColor = bg_colour;
     document.body.appendChild(falling_ball);
     setInterval(()=>{moveBall(falling_ball)}, 10);
   }else{
-    console.log("not allowed")
+    console.warn("not allowed")
   }
 }
 
@@ -84,15 +81,12 @@ function moveBall(ball){
   var ballStyle = window.getComputedStyle(ball);
   var topValue = ballStyle.getPropertyValue("top").replace("px", "");
   ball.style.top = (Number(topValue) + (95 + ball_speed_increase)) + "px";
-  console.log(ball_speed_increase);
   var box = document.getElementsByClassName('block')[0];
   var boxStyle = window.getComputedStyle(box);
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
   var ballBottom = parseInt(ballStyle.bottom.replace('px', ''));
   var diff = ballBottom - boxBottom;
   if(diff < 90){
-
-    console.log(set_ball_colour);
     document.getElementsByClassName("echo")[0].classList.add("echo-active");
     setTimeout(()=>{removeCurrentEcho()}, 430);
 
@@ -105,7 +99,6 @@ function moveBall(ball){
       win.play();
       document.getElementsByClassName("echo")[0].style.backgroundColor = set_ball_colour;
     }else{
-      //console.log(score);
       if(score > 100){
       lives = lives - 1;
       document.getElementById('lifeBox').innerText = lives;
@@ -118,7 +111,6 @@ function moveBall(ball){
     }
 
     fails = fails + 1;
-    console.log(fails);
     if(fails > 2){
       allowed = false;
       restartGame();
@@ -127,7 +119,7 @@ function moveBall(ball){
       try{
         window.navigator.vibrate([200]);
       }catch(e){
-        console.log(e);
+        console.warn(e);
       }
     }else{
       fail.play();
@@ -168,8 +160,6 @@ var previousScore = localStorage.getItem('currentScore');
 if(previousScore == null){
   previousScore = 0;
 }
-console.log(previousScore);
-
 if(score > previousScore){
   localStorage.setItem('currentScore', score);
 }
@@ -189,7 +179,6 @@ function showRestartModal(previousScore){
       document.getElementById('new-score_one').innerText = score;
       window.navigator.vibrate([600]);
     }
-    console.log(score, previousScore)
 }
 
 function updateScore(add){
