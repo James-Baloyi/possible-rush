@@ -54,9 +54,9 @@ window.onselect = (event) => {
 function createFallingBalls(){
   if(allowed == true){
     if(ball_speed_increase > 47){
-      ball_speed_increase = ball_speed_increase - 3;
+      ball_speed_increase = ball_speed_increase - 0.75;
     }else if(ball_speed_increase < 48){
-      ball_speed_increase = ball_speed_increase + 3;
+      ball_speed_increase = ball_speed_increase + 0.75;
     }
     console.log(ball_speed_increase);
     falling_ball = document.createElement('div', 'div');
@@ -208,6 +208,7 @@ function resumeGame(){
   score = 0;
   fails = 0;
   lives = 3;
+  ball_speed_increase = 0;
   document.getElementById('lifeBox').innerText = 3;
   document.getElementById('scoreBox').innerText = 0;
   document.getElementsByClassName('hidden')[0].classList.toggle('score-panel');
