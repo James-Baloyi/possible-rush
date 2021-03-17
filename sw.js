@@ -10,7 +10,6 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-
 if(!navigator.onLine && caches.match(event.request)){
   event.respondWith(caches.match(event.request));
   }

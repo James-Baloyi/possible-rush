@@ -24,7 +24,6 @@ function rotate(deg, event){
   }
 
   replay_array.push(this_play);
-
   if(indices == 0){
     createFallingBalls();
     indices = 1;
@@ -59,7 +58,7 @@ function createFallingBalls(){
     document.body.appendChild(falling_ball);
     setInterval(()=>{moveBall(falling_ball)}, 10);
   }else{
-    console.warn("not allowed")
+    console.warn("not allowed");
   }
 }
 
@@ -82,7 +81,6 @@ function moveBall(ball){
   if(diff < 90){
     document.getElementsByClassName("echo")[0].classList.add("echo-active");
     setTimeout(()=>{removeCurrentEcho()}, 430);
-
     var win = document.getElementById('audio');
     var fail = document.getElementById('audio2');
     var id = ball.getAttribute('id');
@@ -155,6 +153,12 @@ if(previousScore == null){
 }
 if(score > previousScore){
   localStorage.setItem('currentScore', score);
+  var username = localStorage.get('username');
+  var entry = {
+    username: username,
+    score: score
+  }
+  localStorage.setItem('score_entry', JSON.stringify(entry));
 }
 showRestartModal(previousScore);
 }
@@ -165,7 +169,6 @@ function showRestartModal(previousScore){
       document.getElementById('old-score').innerText = previousScore;
       document.getElementById('new-score').innerText = score;
       window.navigator.vibrate([400,110,300]);
-
     }else{
       document.getElementsByClassName('hidden2')[0].classList.toggle('score-panel');
       document.getElementById('old-score_one').innerText = previousScore;
