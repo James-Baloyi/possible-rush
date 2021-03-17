@@ -15,11 +15,9 @@ var capture_event;
 var darkmode = false;
 var set_ball_colour;
 var pauseClicked = false;
-var ball_speed_increase = 0;
 
 function rotate(deg, event){
   capture_event = event;
-  
   var this_play = {
     event: event,
     deg: deg
@@ -52,11 +50,6 @@ window.onselect = (event) => {
 
 function createFallingBalls(){
   if(allowed == true){
-    if(ball_speed_increase > 47){
-      ball_speed_increase = ball_speed_increase - 0.75;
-    }else if(ball_speed_increase < 48){
-      ball_speed_increase = ball_speed_increase + 0.75;
-    }
     falling_ball = document.createElement('div', 'div');
     falling_ball.setAttribute('id', 'falling_ball');
     var bg_colour = colour[Math.floor(Math.random()*colour.length)]
@@ -80,7 +73,7 @@ function moveBall(ball){
 
   var ballStyle = window.getComputedStyle(ball);
   var topValue = ballStyle.getPropertyValue("top").replace("px", "");
-  ball.style.top = (Number(topValue) + (95 + ball_speed_increase)) + "px";
+  ball.style.top = (Number(topValue) + 95) + "px";
   var box = document.getElementsByClassName('block')[0];
   var boxStyle = window.getComputedStyle(box);
   var boxBottom = parseInt(boxStyle.bottom.replace('px', ''));
@@ -197,7 +190,6 @@ function resumeGame(){
   score = 0;
   fails = 0;
   lives = 3;
-  ball_speed_increase = 0;
   document.getElementById('lifeBox').innerText = 3;
   document.getElementById('scoreBox').innerText = 0;
   document.getElementsByClassName('hidden')[0].classList.toggle('score-panel');
