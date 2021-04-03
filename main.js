@@ -68,7 +68,7 @@ function createFallingBalls(){
     falling_ball.setAttribute('data', bg_colour);
     falling_ball.style.backgroundColor = bg_colour;
     document.body.appendChild(falling_ball);
-    setInterval(()=>{moveBall(falling_ball)}, 10);
+    setInterval(()=>{moveBall(falling_ball)}, 9.5);
   }else{
     console.warn("not allowed");
   }
