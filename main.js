@@ -15,6 +15,7 @@ var capture_event;
 var darkmode = false;
 var set_ball_colour;
 var pauseClicked = false;
+var allowPause = true;
 
 window.onload = () => {persistentDarkMode();}
 
@@ -103,6 +104,14 @@ function moveBall(ball){
     }else{
       if(score > 100){
       lives = lives - 1;
+      if(lives < 2){
+        try{
+        document.getElementsByClassName("pause")[0].setAttribute("disabled", true);
+        allowPause = false;
+        }catch(e){
+          alert(e);
+        }
+      }
       document.getElementById('lifeBox').innerText = lives;
       document.getElementsByClassName("echo")[0].style.backgroundColor = "black";
       updateScore(-20);
@@ -132,6 +141,7 @@ function moveBall(ball){
 }
 
 function handlePause(event){
+  if(allowPause){
   if(pauseClicked == false){
     pauseClicked = true;
     allowed = false;
@@ -142,6 +152,7 @@ function handlePause(event){
     createFallingBalls();
     event.target.innerText = "Pause";
   }
+}
 }
 
 function removeCurrentEcho(){
