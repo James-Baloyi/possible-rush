@@ -16,6 +16,17 @@ var darkmode = false;
 var set_ball_colour;
 var pauseClicked = false;
 
+window.onload = () => {persistentDarkMode();}
+
+function persistentDarkMode(){
+  var darkModeStatus = localStorage.getItem("dark-mode");
+  if(darkModeStatus == true || darkModeStatus == "true"){
+    document.getElementsByClassName("darkmode-toggle")[0].click();
+  }else{
+    //do nothing
+  }
+}
+
 function rotate(deg, event){
   capture_event = event;
   var this_play = {
@@ -217,12 +228,18 @@ function toggleDarkMode(){
     toggleBall.classList.add("darkmode-on");
     darkenElements();
     darkmode = true;
+    localStorage.setItem("dark-mode", true);
   }else{
     var toggleBall = document.getElementsByClassName('toggle-ball')[0];
     toggleBall.classList.remove("darkmode-on");
     toggleBall.classList.add("darkmode-off");
     lightenElements();
     darkmode = false;
+    try{
+    localStorage.removeItem("dark-mode");
+    }catch(e){
+      console.warn(e);
+    }
   }
 }
 
