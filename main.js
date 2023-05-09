@@ -175,7 +175,7 @@ if(previousScore == null){
 }
 if(score > previousScore){
   localStorage.setItem('currentScore', score);
-  var username = localStorage.get('username');
+  var username = localStorage.getItem('username');
   var entry = {
     username: username,
     score: score
